@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SUS Pra Você — Gestão</title>
+  <link rel="stylesheet" href="estilo (1).css" />
+</head>
+<body>
+
+<!-- Overlay do menu mobile -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebarMobile()"></div>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">💚</div>
+    <div class="logo-text">
+      <strong>SUS Pra Você</strong>
+      <span>Painel de Gestão</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label">Menu Principal</div>
+    <div class="nav-item active" onclick="showSection('indicadores', this)">
+      <span class="nav-icon">📊</span>
+      <span>Indicadores</span>
+    </div>
+    <div class="nav-item" onclick="showSection('fluxo', this)">
+      <span class="nav-icon">⏱️</span>
+      <span>Gestão de Fluxo</span>
+    </div>
+    <div class="nav-item" onclick="showSection('calendario', this)">
+      <span class="nav-icon">📅</span>
+      <span>Calendário</span>
+    </div>
+    <div class="nav-item" onclick="showSection('relatorios', this)">
+      <span class="nav-icon">📄</span>
+      <span>Gerar Relatórios</span>
+    </div>
+    <div class="nav-item" onclick="showSection('mapa', this)">
+  <span class="nav-icon">🗺️</span>
+  <span>Mapa</span>
+</div>
+
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">R</div>
+      <div class="user-info">
+        <strong>Roberta</strong>
+        <span>Gestora — UBS</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <!-- Botão de menu aparece só no mobile -->
+      <button class="menu-btn" id="menuBtn" onclick="toggleSidebarMobile()" aria-label="Abrir menu">
+        ☰
+      </button>
+
+      <div>
+        <div class="topbar-title" id="topbar-title">Painel de Indicadores</div>
+        <div class="topbar-sub">UBS Juvêncio Gama</div>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <button class="badge-btn" onclick="showToast('Você tem 2 notificações pendentes')">
+        🔔
+        <span class="badge">2</span>
+      </button>
+      <button class="btn-sair" onclick="showToast('Sessão encerrada com sucesso!')">Sair</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ===== INDICADORES ===== -->
+    <section class="section active" id="indicadores">
+      <div class="greeting-bar">
+        <div>
+          <h2>Olá, Roberta! 👋</h2>
+          <p>Aqui está o panorama de saúde da sua área — <strong>Março/2026</strong></p>
+        </div>
+        <div class="greeting-icon">🏥</div>
+      </div>
+
+      <!-- ALERTA -->
+      <div class="alerta-box" id="alerta-vac">
+        <div class="alerta-icon">⚠️</div>
+        <div class="alerta-text">
+          <h4>ALERTA! Índices de Vacinação Baixos</h4>
+          <p>Os índices de vacinação na sua área estão abaixo da meta esperada. Gostaria de gerar um relatório sobre isso?</p>
+          <div class="alerta-actions">
+            <button class="btn-primary" onclick="gerarRelatorioVacina()">✅ Sim, gerar relatório</button>
+            <button class="btn-secondary" onclick="dispensarAlerta()">✖ Não agora</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="cards-grid">
+        <div class="card verde" onclick="showToast('Comorbidades: 312 casos registrados na área')">
+          <div class="card-icon">🫀</div>
+          <div class="card-label">Comorbidades</div>
+          <div class="card-value">312</div>
+          <div class="card-sub">casos registrados na área</div>
+        </div>
+        <div class="card azul" onclick="showToast('Vacinação: 61% da meta atingida')">
+          <div class="card-icon">💉</div>
+          <div class="card-label">Vacinação</div>
+          <div class="card-value">61%</div>
+          <div class="card-sub">da meta atingida</div>
+        </div>
+        <div class="card vermelho" onclick="showToast('Taxa de abandono: 8,4% dos tratamentos')">
+          <div class="card-icon">📉</div>
+          <div class="card-label">Abandono de Tratamento</div>
+          <div class="card-value">8,4%</div>
+          <div class="card-sub">dos pacientes ativos</div>
+        </div>
+        <div class="card amarelo" onclick="showToast('Notificações compulsórias: 14 no período')">
+          <div class="card-icon">📋</div>
+          <div class="card-label">Notif. Compulsórias</div>
+          <div class="card-value">14</div>
+          <div class="card-sub">no período atual</div>
+        </div>
+        <div class="card roxo" onclick="showToast('Absenteísmo: 22% de faltas em consultas e exames')">
+          <div class="card-icon">🚫</div>
+          <div class="card-label">Absenteísmo</div>
+          <div class="card-value">22%</div>
+          <div class="card-sub">em consultas e exames</div>
+        </div>
+      </div>
+
+      <!-- GRÁFICO VACINAÇÃO -->
+      <div class="chart-section">
+        <div class="chart-header">
+          <h3>📈 Índices de Vacinação por Mês</h3>
+          <span>Jan — Mai 2026</span>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#1a7a4a"></div> Tríplice Viral</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1565C0"></div> PNM-10</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e53935"></div> Covid-19</div>
+        </div>
+        <div class="bar-chart" id="barChart"></div>
+      </div>
+    </section>
+
+    <!-- ===== GESTÃO DE FLUXO ===== -->
+    <section class="section" id="fluxo">
+      <div class="greeting-bar">
+        <div>
+          <h2>Olá, Roberta! 👋</h2>
+          <p>Acompanhe os indicadores de fluxo da <strong>UBS Juvêncio Gama</strong></p>
+        </div>
+        <div class="greeting-icon">⏱️</div>
+      </div>
+
+      <div class="fluxo-grid">
+        <div class="fluxo-card">
+          <h4>⏳ Espera na Unidade</h4>
+          <div class="fluxo-value">1h 30min</div>
+          <div class="fluxo-desc">Tempo médio de espera para atendimento</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill amarelo" style="width: 60%"></div>
+          </div>
+        </div>
+
+        <div class="fluxo-card">
+          <h4>🏥 Atendimento Especializado</h4>
+          <div class="fluxo-value" style="color:var(--alerta)">97 dias</div>
+          <div class="fluxo-desc">3 meses e 7 dias de espera média</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill vermelho" style="width: 87%"></div>
+          </div>
+        </div>
+
+        <!-- Encaminhamentos perdidos (PERDA/EXTRAVIO) -->
+        <div class="fluxo-card">
+          <h4>📨 Encaminhamentos Perdidos</h4>
+          <div class="fluxo-value" style="color:var(--azul)">12</div>
+          <div class="fluxo-desc">Encaminhamentos extraviados/cancelados (paciente ou gestão)</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width: 24%; background: var(--azul)"></div>
+          </div>
+        </div>
+
+        <!-- Absenteísmo (FALTAS) -->
+        <div class="fluxo-card">
+          <h4>🚫 Absenteísmo (Especialidades)</h4>
+          <div class="fluxo-value" style="color:var(--alerta)">2,0%</div>
+          <div class="fluxo-desc">Faltas em consultas/exames nas unidades especializadas</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill vermelho" style="width: 20%"></div>
+          </div>
+        </div>
+
+        <div class="fluxo-card">
+          <h4>✅ Consultas Realizadas</h4>
+          <div class="fluxo-value">487</div>
+          <div class="fluxo-desc">No mês de março/2026</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width: 78%"></div>
+          </div>
+        </div>
+
+        <div class="fluxo-card">
+          <h4>🔄 Exames Solicitados</h4>
+          <div class="fluxo-value" style="color:var(--roxo)">218</div>
+          <div class="fluxo-desc">Exames agendados no período</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width: 55%; background: var(--roxo)"></div>
+          </div>
+        </div>
+
+        <div class="fluxo-card">
+          <h4>🤰 Pré-Natal</h4>
+          <div class="fluxo-value">34</div>
+          <div class="fluxo-desc">Pacientes em acompanhamento ativo</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width: 42%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CALENDÁRIO ===== -->
+    <section class="section" id="calendario">
+      <div class="greeting-bar">
+        <div>
+          <h2>Olá, Roberta! 👋</h2>
+          <p>Planejamento e cronograma da <strong>UBS Juvêncio Gama</strong></p>
+        </div>
+        <div class="greeting-icon">📅</div>
+      </div>
+
+      <div class="cal-header">
+        <h3 id="cal-month-label">MARÇO 2026</h3>
+        <div class="cal-nav">
+          <button onclick="changeMonth(-1)">‹</button>
+          <button onclick="changeMonth(1)">›</button>
+        </div>
+      </div>
+
+      <div class="cal-legend">
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#ffab91"></div> Férias Coletivas</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#fff176"></div> Férias Unitárias</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#a5d6a7"></div> Ação de Saúde</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#ce93d8"></div> Feriado Nacional</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#90caf9"></div> Feriado Municipal</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#80deea"></div> Reunião de Equipe</div>
+      </div>
+
+      <div class="cal-grid" id="calGrid"></div>
+
+      <div class="cal-notes">
+        <h4>📌 Notas do Mês</h4>
+        <ul>
+          <li><div class="note-dot" style="background:#a5d6a7"></div> <strong>13/03</strong> — HIPERDIA (Enf. Paula e Dr. Maria)</li>
+          <li><div class="note-dot" style="background:#a5d6a7"></div> <strong>27/03</strong> — HIPERDIA (Enf. João e Dr. Lucas)</li>
+          <li><div class="note-dot" style="background:#fff176; border:1px solid #ccc"></div> <strong>01/03 a 14/03</strong> — Férias da Dra. Luiza</li>
+          <li><div class="note-dot" style="background:#ce93d8"></div> <strong>19/03</strong> — Feriado Nacional (São José)</li>
+          <li><div class="note-dot" style="background:#90caf9"></div> <strong>06/03</strong> — Feriado Municipal</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== RELATÓRIOS ===== -->
+    <section class="section" id="relatorios">
+      <div class="greeting-bar">
+        <div>
+          <h2>Olá, Roberta! 👋</h2>
+          <p>Gere relatórios detalhados para análise e tomada de decisão</p>
+        </div>
+        <div class="greeting-icon">📄</div>
+      </div>
+
+      <div class="relatorio-grid">
+        <div class="relatorio-card">
+          <div class="rel-icon">💉</div>
+          <h4>Vacinação</h4>
+          <p>Cobertura vacinal por faixa etária, tipo de vacina e período.</p>
+          <button class="btn-gerar" onclick="gerarRelatorio('Vacinação')">📥 Gerar Relatório</button>
+        </div>
+        <div class="relatorio-card">
+          <div class="rel-icon">🫀</div>
+          <h4>Comorbidades</h4>
+          <p>Mapeamento de doenças crônicas e prevalência na área de cobertura.</p>
+          <button class="btn-gerar" onclick="gerarRelatorio('Comorbidades')">📥 Gerar Relatório</button>
+        </div>
+        <div class="relatorio-card">
+          <div class="rel-icon">📉</div>
+          <h4>Abandono de Tratamento</h4>
+          <p>Pacientes com tratamento interrompido e análise de causas.</p>
+          <button class="btn-gerar" onclick="gerarRelatorio('Abandono de Tratamento')">📥 Gerar Relatório</button>
+        </div>
+        <div class="relatorio-card">
+          <div class="rel-icon">🚫</div>
+          <h4>Absenteísmo</h4>
+          <p>Faltas em consultas, exames e encaminhamentos especializados.</p>
+          <button class="btn-gerar" onclick="gerarRelatorio('Absenteísmo')">📥 Gerar Relatório</button>
+        </div>
+        <div class="relatorio-card">
+          <div class="rel-icon">⏱️</div>
+          <h4>Tempo de Espera</h4>
+          <p>Tempo médio de espera na unidade e para atendimento especializado.</p>
+          <button class="btn-gerar" onclick="gerarRelatorio('Tempo de Espera')">📥 Gerar Relatório</button>
+        </div>
+        <div class="relatorio-card">
+          <div class="rel-icon">📋</div>
+          <h4>Notificações Compulsórias</h4>
+          <p>Doenças de notificação obrigatória registradas no período.</p>
+          <button class="btn-gerar" onclick="gerarRelatorio('Notificações Compulsórias')">📥 Gerar Relatório</button>
+        </div>
+      </div>
+    </section>
+    <!-- ===== MAPA ===== -->
+<section class="section" id="mapa">
+  <div class="greeting-bar">
+    <div>
+      <h2>Olá, Roberta! 👋</h2>
+      <p>Mapa de georreferenciamento da <strong>UBS Juvêncio Gama</strong></p>
+    </div>
+    <div class="greeting-icon">🗺️</div>
+  </div>
+
+  <div class="mapa-wrap">
+    <iframe
+      src="https://dynamic-cheesecake-671769.netlify.app/mapa.html"
+      title="Mapa de Georreferenciamento"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+
+  </div>
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">Relatório Gerado</h3>
+    <p id="modalBody"></p>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="closeModal()">✅ Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
